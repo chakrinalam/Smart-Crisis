@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard - AquaSmart</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <span class="brand">💧 AquaSmart</span>
+        <div class="sidebar-user">
+            <span class="role-label">Logged in as</span>
+            <span class="username-display">NGO Partner</span>
+            <span class="badge badge-cyan mt-2">NGO / Responder</span>
+        </div>
+        <nav>
+            <a href="#active-tasks"    class="nav-link active">🚑 Active Tasks</a>
+            <a href="#completed-tasks" class="nav-link">✅ Completed Reliefs</a>
+        </nav>
+        <div class="sidebar-footer">
+            <button id="logoutBtn" class="btn btn-outline btn-block" style="color:#ff6b6b; border-color:rgba(255,107,107,0.4);">🚪 Logout</button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+        <header class="page-header">
+            <h2>NGO Response Portal</h2>
+            <p>Manage assigned water shortage crises and update resolution status.</p>
+        </header>
+
+        <div id="alertBox"></div>
+
+        <!-- ACTIVE TASKS -->
+        <section id="active-tasks" class="mb-6 fade-in">
+            <div class="glass-panel">
+                <div class="section-title" style="color:var(--warning);">🚨 Action Required — Allocated Tasks</div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Target Area</th>
+                                <th>Severity</th>
+                                <th>Resource</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="activeTasksBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- COMPLETED TASKS -->
+        <section id="completed-tasks" class="fade-in" style="animation-delay:0.1s;">
+            <div class="glass-panel">
+                <div class="section-title" style="color:var(--success);">✅ Mission History — Resolved</div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Target Area</th>
+                                <th>Date Logged</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="completedTasksBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/ngo.js"></script>
+</body>
+</html>

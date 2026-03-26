@@ -1,0 +1,42 @@
+{
+    "users": [
+        {
+            "username": "admin",
+            "password": "password",
+            "role": "admin"
+        },
+        {
+            "username": "ngo1",
+            "password": "password",
+            "role": "ngo"
+        },
+        {
+            "username": "authority1",
+            "password": "password",
+            "role": "authority"
+        },
+        {
+            "username": "citizen1",
+            "password": "password",
+            "role": "citizen"
+        },
+        {
+            "username": "nalamchakri@gmail.com",
+            "password": "13032006",
+            "role": "citizen"
+        }
+    ],
+    "complaints": [
+        {
+            "id": "_0yy9yo1e4",
+            "citizenId": "citizen1",
+            "area": "Downtown",
+            "severity": "Medium",
+            "description": "Water shortage reported in Downtown.",
+            "status": "Pending",
+            "date": "2026-03-26T03:03:04.026Z",
+            "assignedNgo": null
+        }
+    ],
+    "resources": []
+}

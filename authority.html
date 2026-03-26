@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authority Dashboard - AquaSmart</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <span class="brand">💧 AquaSmart</span>
+        <div class="sidebar-user">
+            <span class="role-label">Logged in as</span>
+            <span class="username-display">Authority</span>
+            <span class="badge badge-orange mt-2">Authority</span>
+        </div>
+        <nav>
+            <a href="#overview"    class="nav-link active">📊 System Overview</a>
+            <a href="#risk-zones"  class="nav-link">⚠️ Live Risk Analysis</a>
+            <a href="#complaints"  class="nav-link">📋 All Complaints</a>
+        </nav>
+        <div class="sidebar-footer">
+            <button id="logoutBtn" class="btn btn-outline btn-block" style="color:#ff6b6b; border-color:rgba(255,107,107,0.4);">🚪 Logout</button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-content">
+        <header class="page-header">
+            <h2>Authority Control Center</h2>
+            <p>Monitor complaints, analyze risk zones, and allocate crisis resources.</p>
+        </header>
+
+        <div id="alertBox"></div>
+
+        <!-- STATS -->
+        <section id="overview" class="mb-6 fade-in">
+            <div class="grid grid-cols-4 gap-4 mb-6">
+                <div class="stat-card">
+                    <div class="stat-title">Active Complaints</div>
+                    <div class="stat-value" id="stat-active">0</div>
+                    <div class="stat-sub">Pending review</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Assigned to NGOs</div>
+                    <div class="stat-value" id="stat-assigned" style="color:var(--primary);">0</div>
+                    <div class="stat-sub">In progress</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Critical Risk Zones</div>
+                    <div class="stat-value" id="stat-high-risk" style="color:var(--danger);">0</div>
+                    <div class="stat-sub">Red alert areas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Resolved</div>
+                    <div class="stat-value" id="stat-resolved" style="color:var(--success);">0</div>
+                    <div class="stat-sub">Completed tickets</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RISK ZONES -->
+        <section id="risk-zones" class="mb-6 fade-in" style="animation-delay:0.1s;">
+            <div class="glass-panel">
+                <div class="section-title">⚠️ Live Risk Assessment</div>
+                <p class="text-muted mb-4" style="font-size:0.85rem;">Areas classified dynamically into Green, Orange, and Red zones based on complaint frequency and severity.</p>
+                <div class="grid grid-cols-3 gap-6" id="risk-zones-container"></div>
+            </div>
+        </section>
+
+        <!-- COMPLAINTS TABLE -->
+        <section id="complaints" class="fade-in" style="animation-delay:0.2s;">
+            <div class="glass-panel">
+                <div class="section-title">📋 Complaint Management &amp; Resource Allocation</div>
+                <div class="table-container">
+                    <table id="allComplaintsTable">
+                        <thead>
+                            <tr>
+                                <th>Ticket ID</th>
+                                <th>Area</th>
+                                <th>Severity</th>
+                                <th>Citizen</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allComplaintsBody"></tbody>
+                    </table>
+                </div>
+                <div id="noDataMsg" class="text-center text-muted mt-6" style="display:none; padding:2rem;">No complaints submitted yet.</div>
+            </div>
+        </section>
+
+        <!-- ALLOCATION MODAL -->
+        <div id="allocationModal" class="modal">
+            <div class="modal-box">
+                <h3 class="mb-4">Assign Task to NGO</h3>
+                <p class="text-muted mb-4" id="modalDesc" style="font-size:0.88rem;"></p>
+                <form id="allocationForm">
+                    <input type="hidden" id="alloc-complaint-id">
+                    <div class="form-group">
+                        <label class="form-label">Select Available NGO</label>
+                        <select id="ngo-select" class="form-control" required></select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Resource Deployed (Optional)</label>
+                        <select id="resource-select" class="form-control">
+                            <option value="None">None required</option>
+                            <option value="Water Tanker (2000L)">Water Tanker (2000L)</option>
+                            <option value="Water Tanker (5000L)">Water Tanker (5000L)</option>
+                            <option value="Pipeline Repair Crew">Pipeline Repair Crew</option>
+                        </select>
+                    </div>
+                    <div class="flex" style="gap:1rem; justify-content:flex-end; margin-top:1.5rem;">
+                        <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Confirm Allocation →</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/authority.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaSmart - Water Crisis Prediction System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+
+    <div class="auth-container">
+        <div class="auth-logo">
+            <h1>💧 AquaSmart</h1>
+            <p>Smart Resource Allocation &amp; Crisis Prediction</p>
+        </div>
+
+        <div id="alertBox"></div>
+
+        <div class="nav-tabs">
+            <div class="nav-tab active" id="tab-login" onclick="switchTab('login')">Sign In</div>
+            <div class="nav-tab" id="tab-register" onclick="switchTab('register')">Register</div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm" class="auth-form active">
+            <div class="form-group">
+                <label class="form-label" for="login-username">Username</label>
+                <input type="text" id="login-username" class="form-control" required placeholder="Enter username">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="login-password">Password</label>
+                <input type="password" id="login-password" class="form-control" required placeholder="Enter password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign In →</button>
+
+            <!-- Clickable Demo Credentials -->
+            <div class="demo-credentials">
+                <h4>🔑 Demo Accounts — click to autofill</h4>
+                <div class="demo-cred-grid">
+                    <div class="demo-cred-item" onclick="fillLogin('admin','password')">
+                        <span class="demo-cred-role">👑 Admin</span>
+                        <span class="demo-cred-user">admin</span>
+                        <span class="demo-cred-pass">password: password</span>
+                    </div>
+                    <div class="demo-cred-item" onclick="fillLogin('authority1','password')">
+                        <span class="demo-cred-role">🏛️ Authority</span>
+                        <span class="demo-cred-user">authority1</span>
+                        <span class="demo-cred-pass">password: password</span>
+                    </div>
+                    <div class="demo-cred-item" onclick="fillLogin('ngo1','password')">
+                        <span class="demo-cred-role">🤝 NGO</span>
+                        <span class="demo-cred-user">ngo1</span>
+                        <span class="demo-cred-pass">password: password</span>
+                    </div>
+                    <div class="demo-cred-item" onclick="fillLogin('citizen1','password')">
+                        <span class="demo-cred-role">👤 Citizen</span>
+                        <span class="demo-cred-user">citizen1</span>
+                        <span class="demo-cred-pass">password: password</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <!-- Register Form -->
+        <form id="registerForm" class="auth-form">
+            <div class="form-group">
+                <label class="form-label" for="reg-username">Username</label>
+                <input type="text" id="reg-username" class="form-control" required placeholder="Choose a username (min 3 chars)">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="reg-password">Password</label>
+                <input type="password" id="reg-password" class="form-control" required placeholder="Create a password (min 6 chars)">
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="reg-role">Role</label>
+                <select id="reg-role" class="form-control" required>
+                    <option value="citizen">Citizen</option>
+                    <option value="authority">Authority</option>
+                    <option value="ngo">NGO</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Create Account →</button>
+        </form>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        // Redirect if already logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = Auth.getCurrentUser();
+            if (user) window.location.href = `${user.role}.html`;
+        });
+
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            document.getElementById(`tab-${tab}`).classList.add('active');
+            document.getElementById(`${tab}Form`).classList.add('active');
+        }
+
+        function fillLogin(username, password) {
+            document.getElementById('login-username').value = username;
+            document.getElementById('login-password').value = password;
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('login-username').value.trim();
+            const pass = document.getElementById('login-password').value;
+            const loggedIn = await Auth.login(user, pass);
+            if (loggedIn) {
+                window.location.href = `${loggedIn.role}.html`;
+            } else {
+                AppUtils.showAlert('Invalid username or password.', 'error', 'alertBox');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const user = document.getElementById('reg-username').value.trim();
+            const pass = document.getElementById('reg-password').value;
+            const role = document.getElementById('reg-role').value;
+            if (user.length < 3 || pass.length < 6) {
+                AppUtils.showAlert('Username must be 3+ chars, password 6+ chars.', 'error', 'alertBox');
+                return;
+            }
+            const registered = await Auth.register(user, pass, role);
+            if (registered) {
+                AppUtils.showAlert('Account created! Please sign in.', 'success', 'alertBox');
+                document.getElementById('registerForm').reset();
+                switchTab('login');
+                document.getElementById('login-username').value = user;
+            } else {
+                AppUtils.showAlert('Username already exists.', 'error', 'alertBox');
+            }
+        });
+    </script>
+</body>
+</html>
