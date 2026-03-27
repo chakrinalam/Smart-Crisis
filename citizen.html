@@ -1,105 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Citizen Dashboard - AquaSmart</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-<div class="dashboard-layout">
+    <div class="dashboard-layout">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <span class="brand">💧 AquaSmart</span>
-        <div class="sidebar-user">
-            <span class="role-label">Logged in as</span>
-            <span class="username-display">Citizen</span>
-            <span class="badge badge-blue mt-2">Citizen</span>
-        </div>
-        <nav>
-            <a href="#new-complaint" class="nav-link active">🚀 Submit Complaint</a>
-            <a href="#history"       class="nav-link">📋 My Complaints</a>
-        </nav>
-        <div class="sidebar-footer">
-            <button id="logoutBtn" class="btn btn-outline btn-block" style="color:#ff6b6b; border-color:rgba(255,107,107,0.4);">🚪 Logout</button>
-        </div>
-    </aside>
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <span class="brand">💧 AquaSmart</span>
+            <div class="sidebar-user">
+                <span class="role-label">Logged in as</span>
+                <span class="username-display">Citizen</span>
+                <span class="badge badge-blue mt-2">Citizen</span>
+            </div>
+            <nav>
+                <a href="#new-complaint" class="nav-link active">🚀 Submit Complaint</a>
+                <a href="#history" class="nav-link">📋 My Complaints</a>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logoutBtn" class="btn btn-outline btn-block"
+                    style="color:#ff6b6b; border-color:rgba(255,107,107,0.4);">🚪 Logout</button>
+            </div>
+        </aside>
 
-    <!-- MAIN -->
-    <main class="main-content">
-        <header class="page-header">
-            <h2>Citizen Dashboard</h2>
-            <p>Report water shortages in your area and track the resolution status.</p>
-        </header>
+        <!-- MAIN -->
+        <main class="main-content">
+            <header class="page-header">
+                <h2>Citizen Dashboard</h2>
+                <p>Report water shortages in your area and track the resolution status.</p>
+            </header>
 
-        <div id="alertBox"></div>
+            <div id="alertBox"></div>
 
-        <!-- SUBMIT COMPLAINT -->
-        <section id="new-complaint" class="mb-6 fade-in">
-            <div class="form-section">
-                <div class="section-title">🚰 Report a Water Shortage</div>
-                <form id="complaintForm">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="form-group">
-                            <label class="form-label" for="area-select">Affected Area</label>
-                            <select id="area-select" class="form-control" required>
-                                <option value="" disabled selected>Select your area</option>
-                                <option value="Downtown">Downtown</option>
-                                <option value="Northridge">Northridge</option>
-                                <option value="Westwood">Westwood</option>
-                                <option value="Eastside">Eastside</option>
-                                <option value="Southpark">Southpark</option>
-                            </select>
+            <!-- SUBMIT COMPLAINT -->
+            <section id="new-complaint" class="mb-6 fade-in">
+                <div class="form-section">
+                    <div class="section-title">🚰 Report a Water Shortage</div>
+                    <form id="complaintForm">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="form-group">
+                                <label class="form-label" for="area-select">Affected Area</label>
+                                <select id="area-select" class="form-control" required>
+                                    <option value="" disabled selected>Select your area</option>
+                                    <option value="Downtown">Downtown</option>
+                                    <option value="Northridge">Northridge</option>
+                                    <option value="Westwood">Westwood</option>
+                                    <option value="Eastside">Eastside</option>
+                                    <option value="Southpark">Southpark</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="severity-select">Severity Level</label>
+                                <select id="severity-select" class="form-control" required>
+                                    <option value="Low">Low — Partial shortage / low pressure</option>
+                                    <option value="Medium">Medium — No water for &lt; 1 day</option>
+                                    <option value="High">High — No water for &gt; 2 days</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label class="form-label" for="severity-select">Severity Level</label>
-                            <select id="severity-select" class="form-control" required>
-                                <option value="Low">Low — Partial shortage / low pressure</option>
-                                <option value="Medium">Medium — No water for &lt; 1 day</option>
-                                <option value="High">High — No water for &gt; 2 days</option>
-                            </select>
+                            <label class="form-label" for="desc-textarea">Detailed Description</label>
+                            <textarea id="desc-textarea" class="form-control" rows="4" required
+                                placeholder="Describe the situation — exact street, time since shortage started, etc..."></textarea>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label" for="desc-textarea">Detailed Description</label>
-                        <textarea id="desc-textarea" class="form-control" rows="4" required placeholder="Describe the situation — exact street, time since shortage started, etc..."></textarea>
-                    </div>
-                    <div style="text-align:right;">
-                        <button type="submit" class="btn btn-primary" style="padding:0.7rem 2rem;">Submit Complaint →</button>
-                    </div>
-                </form>
-            </div>
-        </section>
-
-        <!-- COMPLAINT HISTORY -->
-        <section id="history" class="fade-in" style="animation-delay:0.1s;">
-            <div class="form-section">
-                <div class="section-title">📋 My Complaint History</div>
-                <div class="table-container">
-                    <table id="complaintsTable">
-                        <thead>
-                            <tr>
-                                <th>Ticket ID</th>
-                                <th>Date Submitted</th>
-                                <th>Area</th>
-                                <th>Severity</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="complaintsTableBody"></tbody>
-                    </table>
+                        <div style="text-align:right;">
+                            <button type="submit" class="btn btn-primary" style="padding:0.7rem 2rem;">Submit Complaint
+                                →</button>
+                        </div>
+                    </form>
                 </div>
-                <div id="noDataMsg" class="text-center text-muted mt-6" style="display:none; padding:2rem;">
-                    <span style="font-size:2rem;">📭</span><br>
-                    You haven't submitted any complaints yet.
-                </div>
-            </div>
-        </section>
-    </main>
-</div>
+            </section>
 
-<script src="js/app.js"></script>
-<script src="js/citizen.js"></script>
+            <!-- COMPLAINT HISTORY -->
+            <section id="history" class="fade-in" style="animation-delay:0.1s;">
+                <div class="form-section">
+                    <div class="section-title">📋 My Complaint History</div>
+                    <div class="table-container">
+                        <table id="complaintsTable">
+                            <thead>
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Date Submitted</th>
+                                    <th>Area</th>
+                                    <th>Severity</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="complaintsTableBody"></tbody>
+                        </table>
+                    </div>
+                    <div id="noDataMsg" class="text-center text-muted mt-6" style="display:none; padding:2rem;">
+                        <span style="font-size:2rem;">📭</span><br>
+                        You haven't submitted any complaints yet.
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script src="js/citizen.js"></script>
 </body>
+
 </html>
